@@ -108,7 +108,10 @@ QStringList JMdictEntry::writings() const
 QStringList JMdictEntry::readings() const
 {
 	QStringList res;
-	if (hasKanjiReadings()) foreach (const KanaReading &reading, getKanaReadings()) res << reading.getReading();
+	if (hasKanjiReadings())
+	{
+		foreach (const KanaReading &reading, getKanaReadings()) res << reading.getReading();
+	}
 	return res;
 }
 

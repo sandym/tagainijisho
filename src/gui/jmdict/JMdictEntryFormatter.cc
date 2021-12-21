@@ -366,20 +366,26 @@ QString JMdictEntryFormatter::formatSenses(const ConstEntryPointer &_entry) cons
 
 		QStringList senseHeaders;
 		// Check if the writing is restricted
-		if (!sense->stagK().isEmpty()) foreach (int idx, sense->stagK()) {
-			const KanjiReading &kReading = kanjis[idx];
-			QString str(kReading.getReading());
-			const QList<qint32> &kList = kReading.getKanaReadings();
-			if (!kList.isEmpty()) {
-					QStringList kanasList;
-					foreach (qint32 idx2, kList) kanasList << kanas[idx2].getReading();
-					str += " (" + kanasList.join(",") + ")";
+		if (!sense->stagK().isEmpty())
+		{
+			foreach (int idx, sense->stagK()) {
+				const KanjiReading &kReading = kanjis[idx];
+				QString str(kReading.getReading());
+				const QList<qint32> &kList = kReading.getKanaReadings();
+				if (!kList.isEmpty()) {
+						QStringList kanasList;
+						foreach (qint32 idx2, kList) kanasList << kanas[idx2].getReading();
+						str += " (" + kanasList.join(",") + ")";
+				}
+				senseHeaders << str;
 			}
-			senseHeaders << str;
 		}
-		if (!sense->stagR().isEmpty()) foreach (int idx, sense->stagR()) {
-			const KanaReading &kReading = kanas[idx];
-			senseHeaders << kReading.getReading();
+		if (!sense->stagR().isEmpty())
+		{
+			foreach (int idx, sense->stagR()) {
+				const KanaReading &kReading = kanas[idx];
+				senseHeaders << kReading.getReading();
+			}
 		}
 		if (!senseHeaders.isEmpty()) {
 			QTextCharFormat bold;

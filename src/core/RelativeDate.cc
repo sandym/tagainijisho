@@ -112,7 +112,7 @@ QString RelativeDate::translatedDateString() const
 			if (ago() == 1) return tr("last year");
 			return tr("%1 years ago").arg(ago());
 		case AbsoluteDate:
-			return absoluteDate().toString(Qt::DefaultLocaleShortDate);
+			return QLocale().toString(absoluteDate(), QLocale::ShortFormat);
 		case NotSet:
 		default:
 			return "";

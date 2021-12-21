@@ -12,6 +12,8 @@ else(APPLE)
 	project("tagainijisho")
 endif(APPLE)
 
+add_compile_definitions(QT_DISABLE_DEPRECATED_BEFORE=0x050F00)
+
 # Set the program name to be the same as the project
 set(tagaini_binary ${CMAKE_PROJECT_NAME})
 
@@ -20,9 +22,15 @@ set(QTVERSION 5.15)
 set(CMAKE_AUTOMOC ON)
 
 cmake_minimum_required(VERSION 2.8.12)
-cmake_policy(VERSION 2.8.12)
 
-find_package(Qt5 ${QTVERSION} REQUIRED COMPONENTS Core Widgets PrintSupport Network LinguistTools)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+find_package(Qt6 QUIET COMPONENTS Core Widgets PrintSupport Network LinguistTools)
+if (NOT Qt6_FOUND)
+	cmake_policy(VERSION 2.8.12)
+	find_package(Qt5 ${QTVERSION} REQUIRED COMPONENTS Core Widgets PrintSupport Network LinguistTools)
+endif()
 
 # FIXME only required when CMake downloads dictionary files. Not necessary for building from source package.
 find_program(GUNZIP NAMES gunzip REQUIRED)

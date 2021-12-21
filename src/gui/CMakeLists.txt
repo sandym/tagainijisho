@@ -70,11 +70,16 @@ MainWindow.ui
 add_subdirectory(jmdict)
 add_subdirectory(kanjidic2)
 
-qt5_wrap_ui(tagainijisho_gui_UI_SRCS ${tagainijisho_gui_UIS})
-qt5_add_resources(tagainijisho_gui_RC ${CMAKE_SOURCE_DIR}/tagainijisho.qrc)
+if (NOT Qt6_FOUND)
+	qt5_wrap_ui(tagainijisho_gui_UI_SRCS ${tagainijisho_gui_UIS})
+	qt5_add_resources(tagainijisho_gui_RC ${CMAKE_SOURCE_DIR}/tagainijisho.qrc)
+else()
+	qt6_wrap_ui(tagainijisho_gui_UI_SRCS ${tagainijisho_gui_UIS})
+	qt6_add_resources(tagainijisho_gui_RC ${CMAKE_SOURCE_DIR}/tagainijisho.qrc)
+endif()
 
 add_library(tagaini_gui STATIC ${tagainijisho_gui_UI_SRCS} ${tagainijisho_gui_SRCS})
-target_link_libraries(tagaini_gui tagaini_core tagaini_sqlite Qt5::Core Qt5::Widgets Qt5::PrintSupport Qt5::Network ${extra_link_flags})
+target_link_libraries(tagaini_gui tagaini_core tagaini_sqlite Qt::Core Qt::Widgets Qt::PrintSupport Qt::Network ${extra_link_flags})
 
 # Build the main program
 SET(ICON "")
@@ -123,14 +128,12 @@ macro(install_qt5_plugin _qt_plugin_name _qt_plugins_var _dest_dir)
 	endif()
 endmacro()
 
-# Determine location of QT libraries and frameworks
-get_property(_Qt5_Core_LOCATION TARGET Qt5::Core PROPERTY LOCATION)
-get_filename_component(Qt_LIB_DIR "${_Qt5_Core_LOCATION}" PATH)
 if(APPLE)
+	# Determine location of QT libraries and frameworks
+	get_property(_Qt5_Core_LOCATION TARGET Qt5::Core PROPERTY LOCATION)
+	get_filename_component(Qt_LIB_DIR "${_Qt5_Core_LOCATION}" PATH)
 	get_filename_component(Qt_LIB_DIR "${Qt_LIB_DIR}" PATH)
-endif(APPLE)
 
-if(APPLE)
 	set(BUNDLE_DIR "${tagaini_binary}.app")
 	install_qt5_plugin("Qt5::QCocoaIntegrationPlugin" plugins_to_fixup "${BUNDLE_DIR}/Contents/PlugIns")
 

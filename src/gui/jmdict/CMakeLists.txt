@@ -15,6 +15,11 @@ include_directories(${Qt5Core_INCLUDE_DIRS})
 include_directories(${Qt5Widgets_INCLUDE_DIRS})
 include_directories(${Qt5PrintSupport_INCLUDE_DIRS})
 
-qt5_wrap_ui(tagainijisho_gui_jmdict_UI_SRCS ${tagainijisho_gui_jmdict_UIS})
+if (NOT Qt6_FOUND)
+	qt5_wrap_ui(tagainijisho_gui_jmdict_UI_SRCS ${tagainijisho_gui_jmdict_UIS})
+else()
+	qt6_wrap_ui(tagainijisho_gui_jmdict_UI_SRCS ${tagainijisho_gui_jmdict_UIS})
+endif()
+
 add_library(tagaini_gui_jmdict STATIC ${tagainijisho_gui_jmdict_UI_SRCS} ${tagainijisho_gui_jmdict_MOC_SRCS} ${tagainijisho_gui_jmdict_SRCS})
 target_link_libraries(tagaini_gui_jmdict tagaini_gui)

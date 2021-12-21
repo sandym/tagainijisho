@@ -282,12 +282,12 @@ QString EntryFormatter::formatTrainingData(const ConstEntryPointer &entry) const
 	// Training data
 	if (entry->trained()) {
 		QStringList ret;
-		ret << tr("Studied since %1.").arg(entry->dateAdded().date().toString(Qt::DefaultLocaleShortDate));
+		ret << tr("Studied since %1.").arg(QLocale().toString(entry->dateAdded().date(), QLocale::ShortFormat));
 		ret << tr("Score: %1.").arg(entry->score());
 		if (entry->dateLastTrain().isValid()) {
-			ret << tr("Last trained on %1.").arg(entry->dateLastTrain().date().toString(Qt::DefaultLocaleShortDate));
+			ret << tr("Last trained on %1.").arg(QLocale().toString(entry->dateLastTrain().date(), QLocale::ShortFormat));
 			if (entry->dateLastMistake().isValid()) {
-				ret << tr("Last mistaken on %1.").arg(entry->dateLastMistake().date().toString(Qt::DefaultLocaleShortDate));
+				ret << tr("Last mistaken on %1.").arg(QLocale().toString(entry->dateLastMistake().date(), QLocale::ShortFormat));
 			}
 		}
 		return ret.join(" ");

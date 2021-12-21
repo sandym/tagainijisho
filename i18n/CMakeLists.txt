@@ -6,7 +6,12 @@ foreach(tsfile ${TSFILES})
 	endif()
 endforeach()
 
-qt5_add_translation(QM_FILES ${TRANSLATIONS_FILES})
+if (NOT Qt6_FOUND)
+	qt5_add_translation(QM_FILES ${TRANSLATIONS_FILES})
+else()
+	qt6_add_translation(QM_FILES ${TRANSLATIONS_FILES})
+endif()
+
 add_custom_target (i18n ALL DEPENDS ${QM_FILES})
 
 set(UI_LANG "")

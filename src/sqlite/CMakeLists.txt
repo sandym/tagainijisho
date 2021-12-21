@@ -88,11 +88,11 @@ add_definitions(-DSQLITE_ENABLE_FTS3 -DSQLITE_ENABLE_FTS3_PARENTHESIS -DSQLITE_E
 
 if(SHARED_SQLITE_LIBRARY)
 	add_library(tagaini_sqlite SHARED ${tagainijisho_sqlite_SRCS} ${tagainijisho_sqlite_MOC_SRCS})
-	target_link_libraries(tagaini_sqlite Qt5::Core ${extra_link_flags})
+	target_link_libraries(tagaini_sqlite Qt::Core ${extra_link_flags})
 	install(TARGETS tagaini_sqlite BUNDLE DESTINATION . COMPONENT Runtime LIBRARY DESTINATION lib COMPONENT Runtime)
 else()
 	add_library(tagaini_sqlite STATIC ${tagainijisho_sqlite_SRCS} ${tagainijisho_sqlite_MOC_SRCS})
-	target_link_libraries(tagaini_sqlite Qt5::Core)
+	target_link_libraries(tagaini_sqlite Qt::Core)
 endif()
 if(NOT EMBED_SQLITE)
 	target_link_libraries(tagaini_sqlite sqlite3)

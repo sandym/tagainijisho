@@ -34,7 +34,7 @@ Kanjidic2Plugin.cc
 )
 
 add_library(tagaini_core_kanjidic2 STATIC ${tagainijisho_core_kanjidic2_SRCS})
-target_link_libraries(tagaini_core_kanjidic2 tagaini_sqlite Qt5::Core)
+target_link_libraries(tagaini_core_kanjidic2 tagaini_sqlite Qt::Core)
 
 # Database builder
 set(build_kanji_db_SRCS
@@ -46,7 +46,7 @@ BuildKanjiDB.cc
 
 if(NOT CMAKE_CROSSCOMPILING)
 add_executable(build_kanji_db EXCLUDE_FROM_ALL ${build_kanji_db_SRCS})
-target_link_libraries(build_kanji_db tagaini_sqlite Qt5::Core)
+target_link_libraries(build_kanji_db tagaini_sqlite Qt::Core)
 
 # Database target. Always build the english DB, other languages are optional.
 set(ALL_LANGS "en")
